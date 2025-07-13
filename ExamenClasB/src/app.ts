@@ -51,16 +51,16 @@ export function getLoan(id: number): { loan: Loan; balance: number; isPaid: bool
     totalPagado += pago;
   }
   
-  const saldo = loan!.amount - totalPagado;
-  const estaPagado = saldo === 0;
+  const saldo = loan!.amount - totalPagado; // Calcular el saldo restante
+  const estaPagado = saldo === 0; // Verificar si el préstamo está pagado
   
   return {
     loan: loan!,
     balance: saldo,
     isPaid: estaPagado
-  };
+  }; // Regresa el préstamo, saldo restante y si está pagado
 }
 
 export function clearLoans() {
-  loans:[]
+  loans:[] // Reiniciar el arreglo de préstamos
 }
