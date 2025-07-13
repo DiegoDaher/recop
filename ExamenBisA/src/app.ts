@@ -21,15 +21,17 @@ export function addTask(task: Task): Task {
 }
 
 export function listTasks(): Task[] {
+    //traer todas las tareas
     return tasks;
 }
 
 export function getUpcomingTasks(): Task[] {
+    //Definir la fecha actual
     const now = new Date();
 
     return tasks.filter(item => {
-        const dateTask = new Date(item.dueDate);
-        const diferenciaFecha = dateTask.getTime() - now.getTime();
-        return diferenciaFecha > 0 && diferenciaFecha < 24 * 60 * 60 *1000
+        const dateTask = new Date(item.dueDate); // Convertir la fecha de la tarea a un objeto Date
+        const diferenciaFecha = dateTask.getTime() - now.getTime();// Calcular la diferencia en milisegundos
+        return diferenciaFecha > 0 && diferenciaFecha < 24 * 60 * 60 *1000// filtrar tareas mayores de diferencia convertido en dias
     });
 }
