@@ -5,38 +5,38 @@ export interface Habit {
   streak: number;
 }
 
-const habitos: Habit[] = [];
-let idActual = 1;
+const habits: Habit[] = [];
+let currentId = 1;
 
-export function createHabit(name: string): Habit {
-  const habito: Habit = {
-    id: idActual++,
+export function createHabit(name: string): Habit {  
+  const newHabit: Habit = {
+    id: currentId++,
     name,
     completions: [],
     streak: 0
   };
   
-  habitos.push(habito);
-  return habito;
+  habits.push(newHabit);
+  return newHabit;
 }
 
 export function completeHabitToday(id: number, today: Date = new Date()): Habit {
-  const habito = habitos.find(h => h.id === id);
+  const habito = habits.find(h => h.id === id); // Buscar el hábito por ID
   
   const hoyStr = today.toDateString();
-  const yaCompletado = habito!.completions.some(fecha => fecha.toDateString() === hoyStr);
+  const Completado = habito!.completions.some(fecha => fecha.toDateString() === hoyStr);
   
-  if (!yaCompletado) {
+  if (!Completado) {
     habito!.completions.push(today);
     
     // Calcular racha: si ayer se completó, incrementar, si no, reiniciar a 1
-    const ayer = new Date(today);
-    ayer.setDate(ayer.getDate() - 1);
-    const ayerStr = ayer.toDateString();
+    const ayer = new Date(today); 
+    ayer.setDate(ayer.getDate() - 1); //primero convertimos la fecha de ayer restandole un dia y luego pasarlo a string
+    const ayerStr = ayer.toDateString();  //
     
-    const seHizoAyer = habito!.completions.some(fecha => fecha.toDateString() === ayerStr);
+    const tieneRacha = habito!.completions.some(fecha => fecha.toDateString() === ayerStr); //verificar en un booleano si se completó ayer y tiene racha
     
-    if (seHizoAyer) {
+    if (tieneRacha) {
       habito!.streak++; // Incrementar racha
     } else {
       habito!.streak = 1; // Reiniciar racha
@@ -47,11 +47,11 @@ export function completeHabitToday(id: number, today: Date = new Date()): Habit 
 }
 
 export function getHabitStreak(id: number): number {
-  const habito = habitos.find(h => h.id === id);
-  return habito!.streak;
+  const habito = habits.find(h => h.id === id); // Buscar el hábito por ID
+  return habito!.streak; // Regresa la racha del hábito
 }
 
 export function clearHabits() {
-  habitos.length = 0;
-  idActual = 1;
+  habits.length = 0; // Reiniciar el arreglo a vacio
+  currentId = 1; // Reiniciar el ID a 1
 }
