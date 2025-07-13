@@ -6,11 +6,11 @@ export interface Product {
 }
 
 const db: { products: Product[] } = {
-  products: []
+  products: []//simular base de datos (ya venia)
 };
 
 export function resetDatabase() {
-  db.products = [];
+  db.products = [];// Reiniciar el arreglo a vacio
 }
 
 export function addProduct(product: Omit<Product, 'id'>): Product {
@@ -19,8 +19,8 @@ export function addProduct(product: Omit<Product, 'id'>): Product {
   
   const newProduct: Product = {
     id,
-    ...product
-  };
+    ...product//trae todos los atributos del objeto product con el ...
+  };// Asignar el ID generado al nuevo producto en un objeto
   
   // Agregar el producto a la base de datos
   db.products.push(newProduct);
