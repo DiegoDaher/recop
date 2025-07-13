@@ -25,7 +25,7 @@ export function addProduct(product: Omit<Product, 'id'>): Product {
   // Agregar el producto a la base de datos
   db.products.push(newProduct);
   
-  return newProduct;
+  return newProduct;//regresa el producto creado
 }
 
 export function sellProduct(id: string): Product | null {

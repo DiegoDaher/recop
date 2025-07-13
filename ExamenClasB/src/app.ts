@@ -5,31 +5,31 @@ export interface Loan {
   payments: number[];
 }
 
-const prestamos: Loan[] = [];
-let idActual = 1;
+const loans: Loan[] = [];
+let currentId = 1;
 
 export function createLoan(amount: number, term: number): Loan {
-  const prestamo: Loan = {
-    id: idActual++,
+  const loan: Loan = {
+    id: currentId++,
     amount,
     termMonths: term,
     payments: []
   };
   
-  prestamos.push(prestamo);
-  return prestamo;
-}
+  loans.push(loan);
+  return loan;
+} // Crea un nuevo préstamo y lo agrega al arreglo de préstamos ((ya venia))
 
 export function payLoan(id: number, payment: number): Loan {
-  const prestamo = prestamos.find(p => p.id === id);
+  const loan = loans.find(p => p.id === id); // Buscar el préstamo por ID
   
   // Calcular cuánto se ha pagado en total
   let totalPagado = 0;
-  for (let pago of prestamo!.payments) {
+  for (let pago of loan!.payments) {
     totalPagado += pago;
   }
   
-  const saldoRestante = prestamo!.amount - totalPagado;
+  const saldoRestante = loan!.amount - totalPagado; // Calcular el saldo restante se agrega el loan! para evitar error de undefined o null (solo si loan no es null o undefined)
   
   // Verificar que no se pague más de lo que se debe
   if (payment > saldoRestante) {
@@ -37,31 +37,30 @@ export function payLoan(id: number, payment: number): Loan {
   }
   
   // Agregar el pago al arreglo
-  prestamo!.payments.push(payment);
+  loan!.payments.push(payment); // Agregar el pago al arreglo de pagos del préstamo
   
-  return prestamo!;
+  return loan!; // Regresa el préstamo actualizado
 }
 
 export function getLoan(id: number): { loan: Loan; balance: number; isPaid: boolean } {
-  const prestamo = prestamos.find(p => p.id === id);
+  const loan = loans.find(p => p.id === id);
   
   // Calcular total pagado
   let totalPagado = 0;
-  for (let pago of prestamo!.payments) {
+  for (let pago of loan!.payments) {
     totalPagado += pago;
   }
   
-  const saldo = prestamo!.amount - totalPagado;
+  const saldo = loan!.amount - totalPagado;
   const estaPagado = saldo === 0;
   
   return {
-    loan: prestamo!,
+    loan: loan!,
     balance: saldo,
     isPaid: estaPagado
   };
 }
 
 export function clearLoans() {
-  prestamos.length = 0;
-  idActual = 1;
+  loans:[]
 }
