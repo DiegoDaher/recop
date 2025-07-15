@@ -11,8 +11,10 @@ export function addTask(task: Task): Task {
 //complemento para la fecha de creacion
     const now = new Date();
     const dateTask = new Date(task.dueDate);
+    const diferenciaFecha = dateTask.getTime() - now.getTime();
 
-    if (dateTask > now && dateTask.getTime() - now.getTime() < 24 * 60 * 60 * 1000) {
+    //Verificar si la fecha de la tarea es mayor a la fecha actual y si la diferencia es menor a 24 horas
+    if (dateTask > now && diferenciaFecha < 24 * 60 * 60 * 1000) {
         console.log("Recordatorio enviado");
     }
  //funciona 1ra prueba

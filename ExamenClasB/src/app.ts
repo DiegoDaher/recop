@@ -27,24 +27,18 @@ export function payLoan(id: number, payment: number): Loan {
   let totalPagado = 0;
   for (let pago of loan!.payments) {
     totalPagado += pago;
-  }
-  
+  }  
   const saldoRestante = loan!.amount - totalPagado; // Calcular el saldo restante se agrega el loan! para evitar error de undefined o null (solo si loan no es null o undefined)
-  
-  // Verificar que no se pague más de lo que se debe
+    // Verificar que no se pague más de lo que se debe
   if (payment > saldoRestante) {
     throw new Error("Pago excede el saldo restante");
   }
-  
-  // Agregar el pago al arreglo
+    // Agregar el pago al arreglo
   loan!.payments.push(payment); // Agregar el pago al arreglo de pagos del préstamo
-  
-  return loan!; // Regresa el préstamo actualizado
+    return loan!; // Regresa el préstamo actualizado
 }
-
 export function getLoan(id: number): { loan: Loan; balance: number; isPaid: boolean } {
   const loan = loans.find(p => p.id === id);
-  
   // Calcular total pagado
   let totalPagado = 0;
   for (let pago of loan!.payments) {

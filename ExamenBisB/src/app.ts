@@ -15,16 +15,13 @@ export function resetDatabase() {
 
 export function addProduct(product: Omit<Product, 'id'>): Product {
   // Generar un ID único para el producto
-  const id = Math.random().toString(36).substr(2, 9);
-  
+  const id = Math.random().toString(36);
   const newProduct: Product = {
     id,
     ...product//trae todos los atributos del objeto product con el ...
   };// Asignar el ID generado al nuevo producto en un objeto
-  
-  // Agregar el producto a la base de datos
-  db.products.push(newProduct);
-  
+    // Agregar el producto a la base de datos
+  db.products.push(newProduct);  
   return newProduct;//regresa el producto creado
 }
 
